@@ -19,10 +19,8 @@ export default {
   methods: {
     onSubmit({
       fullName,
-      emailAddress,
       message,
       activeCampaignId,
-      phoneNumber,
       contactCustomAttributes,
       conversationCustomAttributes,
     }) {
@@ -33,17 +31,13 @@ export default {
         });
         this.$store.dispatch('contacts/update', {
           user: {
-            email: emailAddress,
             name: fullName,
-            phone_number: phoneNumber,
           },
         });
       } else {
         this.$store.dispatch('conversation/createConversation', {
           fullName: fullName,
-          emailAddress: emailAddress,
           message: message,
-          phoneNumber: phoneNumber,
           customAttributes: conversationCustomAttributes,
         });
       }

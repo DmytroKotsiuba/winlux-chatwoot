@@ -1,13 +1,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import { VeTable } from 'vue-easytable';
-import { getCountryFlag } from 'dashboard/helper/flag';
 
 import Spinner from 'shared/components/Spinner.vue';
 import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
 import EmptyState from 'dashboard/components/widgets/EmptyState.vue';
 import { dynamicTime } from 'shared/helpers/timeHelper';
-import FluentIcon from 'shared/components/FluentIcon/DashboardIcon.vue';
 
 export default {
   components: {
@@ -61,17 +59,11 @@ export default {
       return this.contacts.map(item => {
         // Note: The attributes used here is in snake case
         // as it simplier the sort attribute calculation
-        const additional = item.additional_attributes || {};
         const { last_activity_at: lastActivityAt } = item;
         const { created_at: createdAt } = item;
         return {
           ...item,
-          phone_number: item.phone_number || '---',
-          company: additional.company_name || '---',
-          profiles: additional.social_profiles || {},
-          city: additional.city || '---',
-          country: additional.country,
-          countryCode: additional.country_code,
+          name: item.name || '---',
           conversationsCount: item.conversations_count || '---',
           last_activity_at: lastActivityAt
             ? dynamicTime(lastActivityAt)
@@ -118,97 +110,6 @@ export default {
               </div>
             </woot-button>
           ),
-        },
-        {
-          field: 'email',
-          key: 'email',
-          title: this.$t('CONTACTS_PAGE.LIST.TABLE_HEADER.EMAIL_ADDRESS'),
-          align: this.isRTL ? 'right' : 'left',
-          sortBy: this.sortConfig.email || '',
-          width: 240,
-          renderBodyCell: ({ row }) => {
-            if (row.email)
-              return (
-                <div class="overflow-hidden whitespace-nowrap text-ellipsis text-woot-500 dark:text-woot-500">
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    href={`mailto:${row.email}`}
-                  >
-                    {row.email}
-                  </a>
-                </div>
-              );
-            return '---';
-          },
-        },
-        {
-          field: 'phone_number',
-          key: 'phone_number',
-          sortBy: this.sortConfig.phone_number || '',
-          title: this.$t('CONTACTS_PAGE.LIST.TABLE_HEADER.PHONE_NUMBER'),
-          align: this.isRTL ? 'right' : 'left',
-        },
-        {
-          field: 'company',
-          key: 'company',
-          sortBy: this.sortConfig.company_name || '',
-          title: this.$t('CONTACTS_PAGE.LIST.TABLE_HEADER.COMPANY'),
-          align: this.isRTL ? 'right' : 'left',
-        },
-        {
-          field: 'city',
-          key: 'city',
-          sortBy: this.sortConfig.city || '',
-          title: this.$t('CONTACTS_PAGE.LIST.TABLE_HEADER.CITY'),
-          align: this.isRTL ? 'right' : 'left',
-        },
-        {
-          field: 'country',
-          key: 'country',
-          title: this.$t('CONTACTS_PAGE.LIST.TABLE_HEADER.COUNTRY'),
-          align: this.isRTL ? 'right' : 'left',
-          sortBy: this.sortConfig.country || '',
-          renderBodyCell: ({ row }) => {
-            if (row.country) {
-              return (
-                <div class="overflow-hidden whitespace-nowrap text-ellipsis">
-                  {`${getCountryFlag(row.countryCode)} ${row.country}`}
-                </div>
-              );
-            }
-            return '---';
-          },
-        },
-        {
-          field: 'profiles',
-          key: 'profiles',
-          title: this.$t('CONTACTS_PAGE.LIST.TABLE_HEADER.SOCIAL_PROFILES'),
-          align: this.isRTL ? 'right' : 'left',
-          renderBodyCell: ({ row }) => {
-            const { profiles } = row;
-
-            const items = Object.keys(profiles);
-
-            if (!items.length) return '---';
-
-            return (
-              <div class="cell--social-profiles flex gap-0.5 items-center">
-                {items.map(
-                  profile =>
-                    profiles[profile] && (
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer nofollow"
-                        href={`https://${profile}.com/${profiles[profile]}`}
-                      >
-                        <FluentIcon icon={`brand-${profile}`} />
-                      </a>
-                    )
-                )}
-              </div>
-            );
-          },
         },
         {
           field: 'last_activity_at',

@@ -84,7 +84,9 @@ POSTGRES_USERNAME=postgres
 POSTGRES_PASSWORD=postgres
 
 REDIS_URL=redis://redis:6379/0
+
 or
+
 REDIS_URL=redis://localhost:6379
 
 RAILS_ENV=development
@@ -190,3 +192,41 @@ If the credentials are correct, you should see the Chatwoot's dashboard.
 ## Conclusion
 
 You have successfully installed and setup Chatwoot on your local machine.
+
+## Troubleshooting
+
+### 1. Sidekiq is not launching
+
+If you see the following error:
+
+```bash
+Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379) sidekiq
+```
+
+Check:
+- Redis is running from Docker Compose
+- Redis URL is correct in the `.env` file
+
+### 2. Chatwoot is not launching
+
+Check if you launced the docker compose file with the following command:
+
+- Check if you launched Docker Compose with the following command:
+  ```bash
+  docker compose up -d
+  ```
+- Check if you launched the Chatwoot itself:
+  ```bash
+  foreman start -f Procfile.dev
+  ```
+
+### 3. Husky pre-commit hook is failing
+
+- Make sure you have installed all the dependencies:
+  ```bash
+  make burn
+  ```
+- Make sure you have installed Ruby **exactly** 3.3.3:
+  ```bash
+  mise use --global ruby@3.3.3
+  ```

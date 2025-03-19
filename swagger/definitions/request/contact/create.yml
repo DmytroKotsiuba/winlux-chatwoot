@@ -4,15 +4,6 @@ required:
 properties:
   inbox_id:
     type: number
-  name:
-    type: string
-    description: name of the contact
-  email:
-    type: string
-    description: email of the contact
-  phone_number:
-    type: string
-    description: phone number of the contact
   avatar:
     type: string
     format: binary

@@ -14,10 +14,6 @@ export default {
     additionalAttributes() {
       return this.contact.additional_attributes || {};
     },
-    company() {
-      const { company = {} } = this.contact;
-      return company;
-    },
     customAttributes() {
       const { custom_attributes: customAttributes = {} } = this.contact;
       return customAttributes;
@@ -30,12 +26,6 @@ export default {
     },
   },
   methods: {
-    onEmailUpdate(value) {
-      this.$emit('update', { email: value });
-    },
-    onPhoneUpdate(value) {
-      this.$emit('update', { phone_number: value });
-    },
     onLocationUpdate(value) {
       this.$emit('update', { location: value });
     },
@@ -51,34 +41,6 @@ export default {
 
 <template>
   <div class="contact-fields">
-    <h3 class="text-lg title">
-      {{ $t('CONTACTS_PAGE.FIELDS') }}
-    </h3>
-    <Attribute
-      :label="$t('CONTACT_PANEL.EMAIL_ADDRESS')"
-      icon="mail"
-      emoji=""
-      :value="contact.email"
-      show-edit
-      @update="onEmailUpdate"
-    />
-    <Attribute
-      :label="$t('CONTACT_PANEL.PHONE_NUMBER')"
-      icon="call"
-      emoji=""
-      :value="contact.phone_number"
-      show-edit
-      @update="onPhoneUpdate"
-    />
-    <Attribute
-      v-if="additionalAttributes.location"
-      :label="$t('CONTACT_PANEL.LOCATION')"
-      icon="map"
-      emoji="🌍"
-      :value="additionalAttributes.location"
-      show-edit
-      @update="onLocationUpdate"
-    />
     <div
       v-for="attribute in customAttributekeys"
       :key="attribute"

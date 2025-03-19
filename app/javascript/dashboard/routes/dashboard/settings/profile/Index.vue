@@ -49,9 +49,7 @@ export default {
     return {
       avatarFile: '',
       avatarUrl: '',
-      name: '',
       displayName: '',
-      email: '',
       messageSignature: '',
       hotKeys: [
         {
@@ -97,9 +95,7 @@ export default {
   methods: {
     initializeUser() {
       this.name = this.currentUser.name;
-      this.email = this.currentUser.email;
       this.avatarUrl = this.currentUser.avatar_url;
-      this.displayName = this.currentUser.display_name;
       this.messageSignature = this.currentUser.message_signature;
     },
     async dispatchUpdate(payload, successMessage, errorMessage) {

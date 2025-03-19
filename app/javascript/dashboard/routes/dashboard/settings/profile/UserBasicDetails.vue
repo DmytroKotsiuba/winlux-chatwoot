@@ -2,7 +2,8 @@
 import { useAlert } from 'dashboard/composables';
 import FormButton from 'v3/components/Form/Button.vue';
 import { useVuelidate } from '@vuelidate/core';
-import { required, minLength, email } from '@vuelidate/validators';
+import { required, minLength } from '@vuelidate/validators';
+
 export default {
   components: {
     FormButton,
@@ -12,17 +13,9 @@ export default {
       type: String,
       default: '',
     },
-    email: {
-      type: String,
-      default: '',
-    },
     displayName: {
       type: String,
       default: '',
-    },
-    emailEnabled: {
-      type: Boolean,
-      default: false,
     },
   },
   setup() {
@@ -32,7 +25,6 @@ export default {
     return {
       userName: this.name,
       userDisplayName: this.displayName,
-      userEmail: this.email,
       inputStyles: {
         borderRadius: '12px',
         padding: '6px 12px',
@@ -47,10 +39,6 @@ export default {
       minLength: minLength(1),
     },
     userDisplayName: {},
-    userEmail: {
-      required,
-      email,
-    },
   },
   watch: {
     name: {
@@ -65,12 +53,6 @@ export default {
       },
       immediate: true,
     },
-    email: {
-      handler(value) {
-        this.userEmail = value;
-      },
-      immediate: true,
-    },
   },
   methods: {
     async updateUser() {
@@ -82,7 +64,6 @@ export default {
       this.$emit('updateUser', {
         name: this.userName,
         displayName: this.userDisplayName,
-        email: this.userEmail,
       });
     },
   },
@@ -114,18 +95,6 @@ export default {
           : ''
       }`"
       @input="v$.userDisplayName.$touch"
-    />
-    <woot-input
-      v-if="emailEnabled"
-      v-model="userEmail"
-      :styles="inputStyles"
-      :class="{ error: v$.userEmail.$error }"
-      :label="$t('PROFILE_SETTINGS.FORM.EMAIL.LABEL')"
-      :placeholder="$t('PROFILE_SETTINGS.FORM.EMAIL.PLACEHOLDER')"
-      :error="`${
-        v$.userEmail.$error ? $t('PROFILE_SETTINGS.FORM.EMAIL.ERROR') : ''
-      }`"
-      @input="v$.userEmail.$touch"
     />
     <FormButton
       type="submit"
