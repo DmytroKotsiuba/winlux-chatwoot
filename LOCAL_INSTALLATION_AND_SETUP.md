@@ -5,7 +5,7 @@
 Before you start, **be sure you have installed**:
 
 * Redis [[link to download](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)]
-* Ruby [[link to download](https://www.ruby-lang.org/en/downloads/)]
+* Ruby [[link to download](https://www.ruby-lang.org/en/downloads/)] **NOTE: !!!Install ruby exactly 3.3.3 version!!!**
 * Docker [[link to download](https://www.docker.com/products/docker-desktop/)]
 * Docker-compose [[link to download](https://docs.docker.com/compose/install/)]
 * Node.js not older that 20 version [[link to download](https://nodejs.org/en/download/)]
@@ -92,7 +92,7 @@ REDIS_URL=redis://localhost:6379
 RAILS_ENV=development
 ```
 
-### Setup the docker-compose.yml file
+### 5. Setup the docker-compose.yml file
 
 Navigate to the `chatwoot` directory and open the `docker-compose.yml` file.
 
@@ -110,7 +110,7 @@ You need to change the `POSTGRES_PASSWORD` to the password you set in the `.env`
 POSTGRES_PASSWORD=postgres
 ```
 
-and change the `image` to the version of the postgres image you have installed.
+OPTIONAL: Postgres version in 3.x branch is very old, version 12. Change the `image` to the version of the postgres image you have installed. For example:
 
 ```
 image: postgres:15 or image: postgres:16
@@ -132,7 +132,7 @@ In result, your postgres changes on `docker-compose.yml` file should look like t
       - POSTGRES_PASSWORD=postgres
 ```
 
-### 5. Build the docker images for development
+### 6. Build the docker images for development
 
 Navigate to the `chatwoot` directory and build the docker images for development:
 
@@ -154,7 +154,7 @@ docker compose build
 docker compose up -d
 ```
 
-### 6. Setup rails server
+### 7. Setup rails server
 
 Navigate to the `chatwoot` directory and setup the rails server:
 
@@ -166,7 +166,7 @@ make db
 foreman start -f Procfile.dev
 ```
 
-### 7. Open the application
+### 8. Open the application
 
 Open the application in your browser:
 
@@ -218,15 +218,4 @@ Check if you launced the docker compose file with the following command:
 - Check if you launched the Chatwoot itself:
   ```bash
   foreman start -f Procfile.dev
-  ```
-
-### 3. Husky pre-commit hook is failing
-
-- Make sure you have installed all the dependencies:
-  ```bash
-  make burn
-  ```
-- Make sure you have installed Ruby **exactly** 3.3.3:
-  ```bash
-  mise use --global ruby@3.3.3
   ```
